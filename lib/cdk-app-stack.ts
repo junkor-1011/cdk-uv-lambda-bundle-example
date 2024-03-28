@@ -13,18 +13,22 @@ export class CdkAppStack extends cdk.Stack {
     super(scope, id, props);
 
     new lambda.Function(this, 'python-lambda', {
+      functionName: 'hello-world-function',
       runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'index.handler',
       code: lambda.Code.fromDockerBuild(
         path.join(__dirname, '../python-lambda/hello-world'),
         { file: 'Dockerfile' },
       ),
+      architecture: lambda.Architecture.X86_64,
+      tracing: lambda.Tracing.ACTIVE,
     });
 
     const dependenciesLayer = new lambda.LayerVersion(
       this,
       'LambdaWebAdapter',
       {
+        layerVersionName: 'python-dependencies-layer-example',
         code: lambda.Code.fromDockerBuild(
           path.join(__dirname, '../python-lambda/hello-world-with-layer'),
           {
@@ -37,6 +41,7 @@ export class CdkAppStack extends cdk.Stack {
     );
 
     new lambda.Function(this, 'python-lambda-with-layer', {
+      functionName: 'hello-world-function-with-layer',
       runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(
@@ -55,6 +60,7 @@ export class CdkAppStack extends cdk.Stack {
       ),
       layers: [dependenciesLayer],
       architecture: lambda.Architecture.X86_64,
+      tracing: lambda.Tracing.ACTIVE,
     });
   }
 }
