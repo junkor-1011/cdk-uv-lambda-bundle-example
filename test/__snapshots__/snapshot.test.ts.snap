@@ -1,0 +1,173 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot test 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "LambdaWebAdapter787CF7CD": {
+      "Properties": {
+        "CompatibleArchitectures": [
+          "x86_64",
+        ],
+        "CompatibleRuntimes": [
+          "python3.12",
+        ],
+        "Content": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "HASH-REPLACED.zip",
+        },
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "pythonlambda4FD167F4": {
+      "DependsOn": [
+        "pythonlambdaServiceRoleBCFC6BA5",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "HASH-REPLACED.zip",
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "pythonlambdaServiceRoleBCFC6BA5",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.12",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "pythonlambdaServiceRoleBCFC6BA5": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "pythonlambdawithlayerD1B938A6": {
+      "DependsOn": [
+        "pythonlambdawithlayerServiceRole26AE4CB0",
+      ],
+      "Properties": {
+        "Architectures": [
+          "x86_64",
+        ],
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "HASH-REPLACED.zip",
+        },
+        "Handler": "index.handler",
+        "Layers": [
+          {
+            "Ref": "LambdaWebAdapter787CF7CD",
+          },
+        ],
+        "Role": {
+          "Fn::GetAtt": [
+            "pythonlambdawithlayerServiceRole26AE4CB0",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.12",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "pythonlambdawithlayerServiceRole26AE4CB0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

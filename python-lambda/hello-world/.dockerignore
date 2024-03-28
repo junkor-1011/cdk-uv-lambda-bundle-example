@@ -1,0 +1,11 @@
+*.pyc
+*.pyo
+.venv
+
+Dockerfile
+
+# EDIT below
+
+README.md
+pyproject.toml
+requirements-dev.lock
