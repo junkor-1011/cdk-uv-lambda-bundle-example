@@ -24,6 +24,9 @@ importers:
       '@types/node':
         specifier: 20.14.2
         version: 20.14.2
+      '@types/source-map-support':
+        specifier: ^0.5.10
+        version: 0.5.10
       '@vitest/coverage-v8':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.14.2)(@vitest/ui@1.6.0))
@@ -33,6 +36,9 @@ importers:
       aws-cdk:
         specifier: 2.145.0
         version: 2.145.0
+      cdk-nag:
+        specifier: ^2.28.138
+        version: 2.28.138(aws-cdk-lib@2.145.0(constructs@10.3.0))(constructs@10.3.0)
       esbuild:
         specifier: ^0.21.4
         version: 0.21.4
@@ -43,8 +49,8 @@ importers:
         specifier: ^15.2.5
         version: 15.2.5
       tsx:
-        specifier: ^4.15.1
-        version: 4.15.1
+        specifier: ^4.13.3
+        version: 4.13.3
       typescript:
         specifier: ~5.4.5
         version: 5.4.5
@@ -549,6 +555,9 @@ packages:
   '@types/node@20.14.2':
     resolution: {integrity: sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q==}
 
+  '@types/source-map-support@0.5.10':
+    resolution: {integrity: sha512-tgVP2H469x9zq34Z0m/fgPewGhg/MLClalNOiPIzQlXrSS2YrKu/xCdSCKnEDwkFha51VKEKB6A9wW26/ZNwzA==}
+
   '@vitest/coverage-v8@1.6.0':
     resolution: {integrity: sha512-KvapcbMY/8GYIG0rlwwOKCVNRc0OL20rrhFkg/CHNzncV03TE2XWvO5w9uZYoxNiMEBacAJt3unSOiZ7svePew==}
     peerDependencies:
@@ -641,6 +650,12 @@ packages:
   cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
+
+  cdk-nag@2.28.138:
+    resolution: {integrity: sha512-lEl4CR5/T5vHN6DJz18D9LMx3anAac2dksPNUFAJ4nB4UFy0PaND1iFtLaqK1KKresxm7FPBWseAACnxsLcUzA==}
+    peerDependencies:
+      aws-cdk-lib: ^2.116.0
+      constructs: ^10.0.5
 
   chai@4.4.1:
     resolution: {integrity: sha512-13sOfMv2+DWduEU+/xbun3LScLoqN17nBeTLUsmDfKdoiC1fr0n9PU4guu4AhRcOVFk/sW8LyZWHuhWtQZiF+g==}
@@ -1104,8 +1119,8 @@ packages:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
     engines: {node: '>=6'}
 
-  tsx@4.15.1:
-    resolution: {integrity: sha512-k/6h17jA1KfUR7SpcteOa880zGmF56s8gMIcSqUR5avyNFi9nlCEKpMiHLrzrqyARGr52A/JablmGey1DEWbCA==}
+  tsx@4.13.3:
+    resolution: {integrity: sha512-FTAJJLQCMiIbt78kD5qhLjHIR5NOQDKC63wcdelWRDBE+d1xSrXYhXq4DzejnC2tGhFZHpDy2Ika0Ugf7sK8gA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -1503,6 +1518,10 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
+  '@types/source-map-support@0.5.10':
+    dependencies:
+      source-map: 0.6.1
+
   '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.14.2)(@vitest/ui@1.6.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -1601,6 +1620,11 @@ snapshots:
   buffer-from@1.1.2: {}
 
   cac@6.7.14: {}
+
+  cdk-nag@2.28.138(aws-cdk-lib@2.145.0(constructs@10.3.0))(constructs@10.3.0):
+    dependencies:
+      aws-cdk-lib: 2.145.0(constructs@10.3.0)
+      constructs: 10.3.0
 
   chai@4.4.1:
     dependencies:
@@ -2099,9 +2123,9 @@ snapshots:
 
   totalist@3.0.1: {}
 
-  tsx@4.15.1:
+  tsx@4.13.3:
     dependencies:
-      esbuild: 0.21.4
+      esbuild: 0.20.2
       get-tsconfig: 4.7.5
     optionalDependencies:
       fsevents: 2.3.3

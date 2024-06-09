@@ -1,9 +1,17 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
+import process from 'node:process';
+
+import { App, Aspects } from 'aws-cdk-lib';
 import 'source-map-support/register';
+import {
+  AwsSolutionsChecks,
+  HIPAASecurityChecks,
+  NIST80053R5Checks,
+  PCIDSS321Checks,
+} from 'cdk-nag';
 import { CdkAppStack } from '../lib/cdk-app-stack';
 
-const app = new cdk.App();
+const app = new App();
 new CdkAppStack(app, 'CdkAppStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
@@ -16,3 +24,12 @@ new CdkAppStack(app, 'CdkAppStack', {
   // env: { account: '123456789012', region: 'us-east-1' },
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+const execNag = process.env.EXECUTE_NAG === 'true';
+
+if (execNag) {
+  Aspects.of(app).add(new AwsSolutionsChecks());
+  Aspects.of(app).add(new NIST80053R5Checks());
+  Aspects.of(app).add(new PCIDSS321Checks());
+  Aspects.of(app).add(new HIPAASecurityChecks());
+}
