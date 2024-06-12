@@ -2,7 +2,7 @@
   "type": "module",
   "name": "cdk-app",
   "version": "0.1.0",
-  "packageManager": "pnpm@9.2.0",
+  "packageManager": "pnpm@9.3.0",
   "bin": {
     "cdk-app": "bin/cdk-app.js"
   },
@@ -13,23 +13,23 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.0",
+    "@biomejs/biome": "^1.8.1",
     "@types/node": "20.14.2",
     "@types/source-map-support": "^0.5.10",
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "aws-cdk": "2.145.0",
-    "cdk-nag": "^2.28.138",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.21.5",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "tsx": "^4.13.3",
+    "lint-staged": "^15.2.6",
+    "tsx": "^4.15.2",
     "typescript": "~5.4.5",
     "vite": "^5.2.13",
     "vitest": "^1.6.0"
   },
   "dependencies": {
     "aws-cdk-lib": "2.145.0",
+    "cdk-nag": "^2.28.141",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }
