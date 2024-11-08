@@ -1,12 +1,11 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import * as cdk from 'aws-cdk-lib';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = import.meta.filename;
+const __dirname = import.meta.dirname;
 
 export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
