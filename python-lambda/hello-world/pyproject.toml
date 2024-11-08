@@ -2,24 +2,13 @@
 name = "hello-world"
 version = "0.1.0"
 description = "Add your description here"
-dependencies = [
-    "pydantic>=2.6.4",
-]
 readme = "README.md"
-requires-python = ">= 3.12"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.rye]
-managed = true
-dev-dependencies = [
-    "ipython>=8.22.2",
+requires-python = ">=3.12"
+dependencies = [
+    "pandantic>=0.3.1",
 ]
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/hello_world"]
+[dependency-groups]
+dev = [
+    "ipython>=8.29.0",
+]

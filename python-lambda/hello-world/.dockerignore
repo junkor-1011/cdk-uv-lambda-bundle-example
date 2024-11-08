@@ -7,5 +7,3 @@ Dockerfile
 # EDIT below
 
 README.md
-pyproject.toml
-requirements-dev.lock
