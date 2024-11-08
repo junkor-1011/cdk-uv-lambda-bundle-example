@@ -1,13 +1,11 @@
-FROM docker.io/library/python:3.12-slim
+FROM ghcr.io/astral-sh/uv:bookworm-slim
 
-COPY requirements.lock /workspace/
+ENV PYTHON_VERSION=3.12
 
-WORKDIR /workspace
+WORKDIR /work
 
-# ref: https://github.com/astral-sh/rye/discussions/239
-RUN sed '/^-e/d' /workspace/requirements.lock > /workspace/requirements.txt && \
-    mkdir /workspace/tmp && \
-    pip install -r /workspace/requirements.txt --no-cache-dir --prefix=/workspace/tmp && \
-    rm -rf /workspace/tmp/bin && \
-    mkdir -p /asset/python && \
-    mv /workspace/tmp/lib -t /asset/python
+RUN --mount=type=bind,target=. uv export --no-dev --frozen --output-file /tmp/requirements.txt
+
+RUN uv python install $PYTHON_VERSION && \
+    uv venv && \
+    uv pip install -r /tmp/requirements.txt --no-cache-dir --target /asset/python
