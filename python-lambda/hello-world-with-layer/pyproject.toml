@@ -1,26 +1,16 @@
 [project]
-name = "hello-world"
+name = "hello-world-with-layer"
 version = "0.1.0"
 description = "Add your description here"
-dependencies = [
-    "requests>=2.31.0",
-    "orjson>=3.10.0",
-]
 readme = "README.md"
-requires-python = ">= 3.12"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.rye]
-managed = true
-dev-dependencies = [
-    "ruff>=0.3.4",
+requires-python = ">=3.12"
+dependencies = [
+    "orjson>=3.10.11",
+    "requests>=2.32.3",
 ]
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/hello_world"]
+[dependency-groups]
+dev = [
+    "ipython>=8.29.0",
+    "ruff>=0.7.3",
+]

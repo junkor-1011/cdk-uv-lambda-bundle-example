@@ -2,5 +2,7 @@
   - biome check --apply
 '*.{js,jsx,mjs,cjs,json,jsonc}':
   - biome format --write --no-errors-on-unmatched
+'*.py':
+  - uvx ruff format
 '*.rs':
   - rustfmt --edition=2021
