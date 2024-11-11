@@ -10,7 +10,7 @@ exports[`snapshot test 1`] = `
     },
   },
   "Resources": {
-    "LambdaWebAdapter787CF7CD": {
+    "PythonLayer74A2AA62": {
       "Properties": {
         "CompatibleArchitectures": [
           "x86_64",
@@ -132,7 +132,7 @@ exports[`snapshot test 1`] = `
         "Handler": "index.handler",
         "Layers": [
           {
-            "Ref": "LambdaWebAdapter787CF7CD",
+            "Ref": "PythonLayer74A2AA62",
           },
         ],
         "Role": {

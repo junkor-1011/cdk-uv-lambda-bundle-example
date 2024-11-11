@@ -24,7 +24,7 @@ export class CdkAppStack extends cdk.Stack {
       tracing: lambda.Tracing.ACTIVE,
     });
 
-    const dependenciesLayer = new PythonLayerVersion(this, 'LambdaWebAdapter', {
+    const dependenciesLayer = new PythonLayerVersion(this, 'PythonLayer', {
       layerVersionName: 'python-dependencies-layer-example',
       path: path.join(__dirname, '../python-lambda/hello-world-with-layer'),
       compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
