@@ -3,6 +3,10 @@ import path from 'node:path';
 import * as cdk from 'aws-cdk-lib';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
+import {
+  PythonFunction,
+  PythonLayerVersion,
+} from './uv-python-lambda.construct';
 
 // const __filename = import.meta.filename;
 const __dirname = import.meta.dirname;
@@ -11,33 +15,21 @@ export class CdkAppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new lambda.Function(this, 'python-lambda', {
+    new PythonFunction(this, 'python-lambda', {
       functionName: 'hello-world-function',
       runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'index.handler',
-      code: lambda.Code.fromDockerBuild(
-        path.join(__dirname, '../python-lambda/hello-world'),
-        { file: 'Dockerfile' },
-      ),
+      path: path.join(__dirname, '../python-lambda/hello-world'),
       architecture: lambda.Architecture.X86_64,
       tracing: lambda.Tracing.ACTIVE,
     });
 
-    const dependenciesLayer = new lambda.LayerVersion(
-      this,
-      'LambdaWebAdapter',
-      {
-        layerVersionName: 'python-dependencies-layer-example',
-        code: lambda.Code.fromDockerBuild(
-          path.join(__dirname, '../python-lambda/hello-world-with-layer'),
-          {
-            file: 'dependencies-layer.Dockerfile',
-          },
-        ),
-        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
-        compatibleArchitectures: [lambda.Architecture.X86_64],
-      },
-    );
+    const dependenciesLayer = new PythonLayerVersion(this, 'LambdaWebAdapter', {
+      layerVersionName: 'python-dependencies-layer-example',
+      path: path.join(__dirname, '../python-lambda/hello-world-with-layer'),
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
+      compatibleArchitectures: [lambda.Architecture.X86_64],
+    });
 
     new lambda.Function(this, 'python-lambda-with-layer', {
       functionName: 'hello-world-function-with-layer',
@@ -51,6 +43,7 @@ export class CdkAppStack extends cdk.Stack {
             '*.Dockerfile',
             '*.md',
             'requirements*',
+            'uv.lock',
             'pyproject.toml',
             '.venv',
             '.gitignore',
