@@ -12,7 +12,15 @@ import {
 import { CdkAppStack } from '../lib/cdk-app-stack';
 
 const app = new App();
+
+const usingDocker: boolean = (() => {
+  return (
+    process.env.USING_DOCKER === '1' || process.env.USING_DOCKER === 'true'
+  );
+})();
+
 new CdkAppStack(app, 'CdkAppStack', {
+  usingDocker,
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
