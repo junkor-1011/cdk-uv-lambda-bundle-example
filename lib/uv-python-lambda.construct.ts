@@ -31,6 +31,9 @@ type OmitKey = 'code';
 export type PythonFunctionProps = Omit<lambda.FunctionProps, OmitKey> & {
   readonly path: string;
   readonly uvOptions?: UVOptions;
+  readonly build?: {
+    readonly image?: DockerImage;
+  };
 };
 
 export class PythonFunction extends lambda.Function {
@@ -40,7 +43,7 @@ export class PythonFunction extends lambda.Function {
       code: new lambda.AssetCode(props.path, {
         assetHashType: AssetHashType.OUTPUT,
         bundling: {
-          image: DockerImage.fromRegistry('dummy'),
+          image: props?.build?.image ?? DockerImage.fromRegistry('dummy'),
           local: {
             tryBundle: (outputDir, _options): boolean => {
               const uvOptions = {
@@ -118,6 +121,9 @@ export type PythonLayerVersionProps = Omit<
 > & {
   readonly path: string;
   readonly uvOptions?: UVOptions;
+  readonly build?: {
+    readonly image?: DockerImage;
+  };
 };
 
 export class PythonLayerVersion extends lambda.LayerVersion {
@@ -127,7 +133,7 @@ export class PythonLayerVersion extends lambda.LayerVersion {
       code: new lambda.AssetCode(props.path, {
         assetHashType: AssetHashType.OUTPUT,
         bundling: {
-          image: DockerImage.fromRegistry('dummy'),
+          image: props?.build?.image ?? DockerImage.fromRegistry('dummy'),
           local: {
             tryBundle: (outputDir, _options): boolean => {
               const uvOptions = {
