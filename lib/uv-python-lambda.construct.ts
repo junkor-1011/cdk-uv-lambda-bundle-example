@@ -29,7 +29,7 @@ const uvOptionsDefault = {
 
 type OmitKey = 'code';
 export type PythonFunctionProps = Omit<lambda.FunctionProps, OmitKey> & {
-  readonly path: string;
+  readonly entry: string;
   readonly uvOptions?: UVOptions;
   readonly build?: {
     readonly image?: DockerImage;
@@ -40,7 +40,7 @@ export class PythonFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props: PythonFunctionProps) {
     super(scope, id, {
       ...props,
-      code: new lambda.AssetCode(props.path, {
+      code: new lambda.AssetCode(props.entry, {
         assetHashType: AssetHashType.OUTPUT,
         bundling: {
           image: props?.build?.image ?? DockerImage.fromRegistry('dummy'),
@@ -60,9 +60,9 @@ export class PythonFunction extends lambda.Function {
               const originalDir = process.cwd();
               const tmpRequirementsTxtPath = `/tmp/requirements-${randomUUID()}.txt`;
 
-              process.chdir(props.path);
+              process.chdir(props.entry);
 
-              fs.cpSync(props.path, outputDir, {
+              fs.cpSync(props.entry, outputDir, {
                 recursive: true,
                 filter: (source, _destination): boolean => {
                   if (source.includes('.venv/')) return false;
@@ -119,7 +119,7 @@ export type PythonLayerVersionProps = Omit<
   lambda.LayerVersionProps,
   OmitKey
 > & {
-  readonly path: string;
+  readonly entry: string;
   readonly uvOptions?: UVOptions;
   readonly build?: {
     readonly image?: DockerImage;
@@ -130,7 +130,7 @@ export class PythonLayerVersion extends lambda.LayerVersion {
   constructor(scope: Construct, id: string, props: PythonLayerVersionProps) {
     super(scope, id, {
       ...props,
-      code: new lambda.AssetCode(props.path, {
+      code: new lambda.AssetCode(props.entry, {
         assetHashType: AssetHashType.OUTPUT,
         bundling: {
           image: props?.build?.image ?? DockerImage.fromRegistry('dummy'),
@@ -150,7 +150,7 @@ export class PythonLayerVersion extends lambda.LayerVersion {
               const originalDir = process.cwd();
               const tmpRequirementsTxtPath = `/tmp/requirements-${randomUUID()}.txt`;
 
-              process.chdir(props.path);
+              process.chdir(props.entry);
 
               const uvExportOptions: string = (() => {
                 let opts = '';
