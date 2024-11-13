@@ -38,6 +38,10 @@ export type PythonFunctionProps = Omit<lambda.FunctionProps, OmitKey> & {
 
 export class PythonFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props: PythonFunctionProps) {
+    if (props.runtime && props.runtime.family !== lambda.RuntimeFamily.PYTHON) {
+      throw new Error('Only `PYTHON` runtimes are supported.');
+    }
+
     super(scope, id, {
       ...props,
       code: new lambda.AssetCode(props.entry, {
