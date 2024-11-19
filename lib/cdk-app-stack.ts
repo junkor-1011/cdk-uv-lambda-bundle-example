@@ -21,11 +21,6 @@ export class CdkAppStack extends cdk.Stack {
       entry: path.join(__dirname, '../python-lambda/hello-world'),
       architecture: lambda.Architecture.X86_64,
       tracing: lambda.Tracing.ACTIVE,
-      build: {
-        image: cdk.DockerImage.fromBuild(
-          path.join(__dirname, '../python-lambda/hello-world'),
-        ),
-      },
     });
 
     const dependenciesLayer = new PythonLayerVersion(this, 'PythonLayer', {
@@ -33,12 +28,6 @@ export class CdkAppStack extends cdk.Stack {
       entry: path.join(__dirname, '../python-lambda/hello-world-with-layer'),
       compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       compatibleArchitectures: [lambda.Architecture.X86_64],
-      build: {
-        image: cdk.DockerImage.fromBuild(
-          path.join(__dirname, '../python-lambda/hello-world-with-layer'),
-          { file: 'dependencies-layer.Dockerfile' },
-        ),
-      },
     });
 
     new lambda.Function(this, 'python-lambda-with-layer', {
