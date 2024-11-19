@@ -10,12 +10,8 @@ import {
 
 const __dirname = import.meta.dirname;
 
-export type CdkAppStackProps = cdk.StackProps & {
-  usingDocker?: boolean;
-};
-
 export class CdkAppStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: CdkAppStackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     new PythonFunction(this, 'python-lambda', {
@@ -26,11 +22,9 @@ export class CdkAppStack extends cdk.Stack {
       architecture: lambda.Architecture.X86_64,
       tracing: lambda.Tracing.ACTIVE,
       build: {
-        image: props?.usingDocker
-          ? cdk.DockerImage.fromBuild(
-              path.join(__dirname, '../python-lambda/hello-world'),
-            )
-          : undefined,
+        image: cdk.DockerImage.fromBuild(
+          path.join(__dirname, '../python-lambda/hello-world'),
+        ),
       },
     });
 
@@ -40,12 +34,10 @@ export class CdkAppStack extends cdk.Stack {
       compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       compatibleArchitectures: [lambda.Architecture.X86_64],
       build: {
-        image: props?.usingDocker
-          ? cdk.DockerImage.fromBuild(
-              path.join(__dirname, '../python-lambda/hello-world-with-layer'),
-              { file: 'dependencies-layer.Dockerfile' },
-            )
-          : undefined,
+        image: cdk.DockerImage.fromBuild(
+          path.join(__dirname, '../python-lambda/hello-world-with-layer'),
+          { file: 'dependencies-layer.Dockerfile' },
+        ),
       },
     });
 
