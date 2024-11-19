@@ -8,7 +8,6 @@ import {
   PythonLayerVersion,
 } from './uv-python-lambda.construct';
 
-// const __filename = import.meta.filename;
 const __dirname = import.meta.dirname;
 
 export type CdkAppStackProps = cdk.StackProps & {
